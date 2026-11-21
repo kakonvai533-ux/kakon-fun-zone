@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kakon Fun Zone</title>
+
+<style>
+* { box-sizing:border-box; }
+
+body {
+ margin:0;
+ background:#101010;
+ color:white;
+ font-family:Arial,sans-serif;
+ text-align:center;
+}
+
+header {
+ background:#202020;
+ padding:20px;
+ border-bottom:2px solid orange;
+}
+
+header h1 {color:orange;margin:0;}
+
+.hero {padding:35px 15px;}
+
+.hero h2 {font-size:28px;}
+
+.hero p {color:#ccc;}
+
+.card {
+ background:#222;
+ margin:15px;
+ padding:22px;
+ border-radius:15px;
+ border:1px solid #444;
+}
+
+.card h3 {color:orange;}
+
+button {
+ background:orange;
+ color:black;
+ border:0;
+ padding:13px 22px;
+ border-radius:9px;
+ font-size:16px;
+ font-weight:bold;
+ margin:8px;
+}
+
+button:active {transform:scale(.96);}
+
+#game {padding:20px;}
+
+input {
+ padding:13px;
+ border-radius:8px;
+ border:0;
+ width:90%;
+ max-width:300px;
+ margin:10px;
+}
+
+footer {
+ padding:25px;
+ color:#aaa;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>🔥 KAKON FUN ZONE</h1>
+<p>Fun • Quiz • Entertainment</p>
+</header>
+
+<div class="hero" id="home">
+<h2>Welcome to Fun World! 😍</h2>
+<p>নিজেকে কতটা চেনো? পরীক্ষা করে দেখো!</p>
+<button onclick="startQuiz()">Play Quiz 🎮</button>
+</div>
+
+<div class="card">
+<h3>❤️ Love Calculator</h3>
+<p>তোমাদের নাম দিয়ে মজার Compatibility দেখো!</p>
+<input id="name1" placeholder="তোমার নাম">
+<input id="name2" placeholder="প্রিয় মানুষের নাম">
+<br>
+<button onclick="love()">Calculate ❤️</button>
+<h2 id="loveResult"></h2>
+</div>
+
+<div class="card" id="game">
+<h3>🧠 Personality Quiz</h3>
+<p>তুমি কোন ধরনের মানুষ?</p>
+<button onclick="startQuiz()">Start Quiz</button>
+</div>
+
+<div id="quizArea"></div>
+
+<footer>
+<p>© 2026 Kakon Fun Zone</p>
+<p>Made with ❤️ by Kakon</p>
+</footer>
+
+<script>
+
+function startQuiz() {
+ document.getElementById("quizArea").innerHTML = `
+ <div class="card">
+ <h2>তুমি কেমন মানুষ? 🤔</h2>
+ <p>তোমার সবচেয়ে পছন্দের কাজ কোনটি?</p>
+ <button onclick="result('রোমান্টিক')">❤️ ভালোবাসা</button>
+ <button onclick="result('মজার')">😂 বন্ধুদের সাথে মজা</button>
+ <button onclick="result('স্বপ্নবাজ')">🚀 স্বপ্ন দেখা</button>
+ <button onclick="result('শান্ত')">😌 একা থাকা</button>
+ </div>`;
+}
+
+function result(type) {
+ document.getElementById("quizArea").innerHTML = `
+ <div class="card">
+ <h2>তোমার Result 🎉</h2>
+ <h1 style="color:orange">${type} মানুষ!</h1>
+ <p>তোমার ব্যক্তিত্বের এই দিকটি বেশ মজার!</p>
+ <button onclick="share()">Share Result</button>
+ <button onclick="startQuiz()">Play Again</button>
+ </div>`;
+ window.myResult = type;
+}
+
+function love() {
+ let a = document.getElementById("name1").value.trim();
+ let b = document.getElementById("name2").value.trim();
+
+ if(!a || !b) {
+  alert("দুইটি নাম লিখো!");
+  return;
+ }
+
+ let score = 50 + (a.length * 7 + b.length * 11) % 51;
+
+ document.getElementById("loveResult").innerText =
+ "❤️ Fun Score: " + score + "%";
+}
+
+function share() {
+ let msg = "আমি Kakon Fun Zone-এ Quiz খেলেছি! আমার Result: " + window.myResult + " মানুষ! ❤️";
+ if(navigator.share) {
+  navigator.share({title:"My Quiz Result",text:msg});
+ } else {
+  navigator.clipboard.writeText(msg);
+  alert("Result Copy হয়েছে!");
+ }
+}
+
+</script>
+
+</body>
+</html>
